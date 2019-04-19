@@ -64,6 +64,7 @@ names(obj11) # 螢幕顯示 "Ming"  "Shawn" "Eric"
 
 如果只要改**部份**`names(obj11)`，只需要對它進行objection extraction，例如：
 ```{r}
+names(obj11)
 names(obj11)[c(1,2)] <- c("M","S") # 只改第1，2元素名稱
 names(obj11) # 螢幕顯示 "M"    "S"    "Eric"
 ```
@@ -94,7 +95,8 @@ studentRecord
 ### 1.2
 請將"一年級"，"二年級"，"三年級"，"四年級"改成"一"，"二"，"三"，"四"。（hint: 改掉studentRecord[[4]]的元素名稱。）（此題最後一行請輸入studentRecord，老師改題時會看studentRecord的names有沒有正確更改。）
 ```{r ans12}
-
+studentRecord[[c(4)]]
+names(studentRecord[[c(4)]])[c(1,2,3,4)]<-c("一","二","三","四")
 studentRecord
 ```
 
@@ -119,17 +121,27 @@ commitCheck <- fromJSON(commitCheck, simplifyVector = F)
 ### 2.1
 請取出commitCheck第8個元素底下的**commit**元素，再拿出它底下的**committer**元素，再拿出它底下的**date**元素的第一個值，存成commit8Date答案物件（為character class) 。（最後一行最忘了打答案物件）
 ```{r ans21}
+commitCheck[[8]][["commit"]][["committer"]][["date"]][[1]] ->commit8Date
+typeof(commit8Date)
+commit8Date
 ```
 
 
 ### 2.2
 commit8Date的日期時間為UTC時間，請將它轉成台灣時間的date time class並存在答案物件commit8TWDate。（最後一行最忘了打答案物件）
 ```{r ans22}
+ymd_hms(commit8Date) -> commit8Date
+typeof(commit8Date)
+with_tz(commit8Date,tzone="Asia/Taipei") ->commit8TWDate
+commit8TWDate
 ```
 
 ### 2.3
 原本commitCheck裡的元素沒有命名（`names(commitCheck)`會顯示NULL），請將這些元素依其位置順序命名為"commit1","commit2", "commit3"等等。此題最後一行請輸入commitCheck，老師改題時會看commitCheck的names有沒有正確更改。）(hint: `c(1:5)`可創出c(1,2,3,4,5); `length(commitCheck)`會給你commitCheck元素個數)
 ```{r ans23}
+names(commitCheck)[c(1,3)] <- c("commit1","commit2","commit3")
+length(commitCheck)
+commitCheck
 ```
 
 ### 2.4
@@ -141,16 +153,23 @@ map(commitCheck,~.[[3]][[2]][[3]][[1]]) -> allCommitDatesList
 
 allCommitDatesList是個list，請使用`unlist()`函數將它轉成一個atomic vector其class為character，並存在allCommitDates答案物件。（最後一行最忘了打答案物件）
 ```{r ans24}
+unlist(allCommitDatesList)-> allCommitDates
+class(allCommitDates)
+allCommitDates
 ```
 
 ### 2.5 
 allCommitDates是UTC時區的時間文字字串，請將它轉成date time格式，再改成台灣時區後，存在allCommitDatesTW答案物件。（最後一行最忘了打答案物件）
 ```{r ans25}
+ymd_hms(allCommitDates) ->allCommitDates
+with_tz(allCommitDates,tzone="Asia/Taipei") ->allCommitDatesTW
+allCommitDatesTW
 ```
 
 ### 2.6
 使用`hour()`及`minute()`可分別將date time元素的「小時」及「分鐘」取出（其中小時是24小時制）。請創立一個logical vector答案物件logicWithinTimeFrame，各個元素值為TRUE時代表allCommitDatesTW的時間落在凌晨4點30到凌晨6點30之間（含起迄時點）。（最後一行最忘了打答案物件）
 ```{r ans26}
+hour(allCommitDatesTW)>=4 & minute(allCommitDatesTW)>=30 
 ```
 
 ## 3
@@ -165,18 +184,25 @@ transcriptData的class是data frame（用`class(transcriptData)`可得知），�
 ### 3.1
 請查詢transcriptData元素名稱，並將它們存在名為variableNames的character vector答案物件裡。（最後一行最忘了打答案物件）
 ```{r ans31}
+names(transcriptData) ->variableNames
+variableNames
 ```
 
 ### 3.2
 variableNames裡每個值是這資料有的欄位名稱，我們常稱之為**變數名稱**。請創造一個logic vector名為logicFromEcon的答案物件，其各別元素值為TRUE當「學系」變數裡的對應元素值為"經濟學系"。（最後一行最忘了打答案物件）
 
 ```{r ans32}
+#transcriptData[[3]]
+str_detect(transcriptData[[3]],"經濟學系") ->logicFromEcon
+logicFromEcon
 ```
 
 ### 3.3
 請由transcriptData中選出"學號","學分數","必選修類別（必∕選∕通）"變數（使用`[.]` extraction）並存成transcriptPartialData答案物件。（最後一行最忘了打答案物件）
 
 ```{r ans33}
+transcriptData[c(1,7,8)] ->transcriptPartialData
+transcriptPartialData
 ```
 
 ### 3.4
@@ -185,6 +211,8 @@ variableNames裡每個值是這資料有的欄位名稱，我們常稱之為**�
 > 這題會使用到name=value將賦予元素名稱，若name有特別字元時，我們可換成"name"=value的形式書寫，如： x <- list(z=c(1,2),"this is special"=c(T,F,T,T,F))
 
 ```{r ans34}
+transcriptPartialData & logicFromEcon ->transcriptPartialDataEcon
+transcriptPartialDataEcon
 ```
 
 
