@@ -7,10 +7,6 @@ params:
   studentName: "你的名字"
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, eval=F, message=F, warning = F)
-```
-
 # 注意事項
 
 存檔與填寫注意事項：
