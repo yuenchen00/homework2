@@ -139,9 +139,10 @@ commit8TWDate
 ### 2.3
 原本commitCheck裡的元素沒有命名（`names(commitCheck)`會顯示NULL），請將這些元素依其位置順序命名為"commit1","commit2", "commit3"等等。此題最後一行請輸入commitCheck，老師改題時會看commitCheck的names有沒有正確更改。）(hint: `c(1:5)`可創出c(1,2,3,4,5); `length(commitCheck)`會給你commitCheck元素個數)
 ```{r ans23}
-names(commitCheck)[c(1,3)] <- c("commit1","commit2","commit3")
-length(commitCheck)
-commitCheck
+names(commitCheck)[c(1:30)] <- c("commit1","commit2","commit3","commit4","commit5","commit6","commit7","commit8","commit9","commit10","commit11","commit12","commit13","commit14","commit15","commit16","commit17","commit18","commit19","commit20","commit21","commit22","commit23","commit24","commit25","commit26","commit27","commit28","commit29","commit30")
+
+names(commitCheck)
+#commitCheck
 ```
 
 ### 2.4
@@ -169,7 +170,11 @@ allCommitDatesTW
 ### 2.6
 使用`hour()`及`minute()`可分別將date time元素的「小時」及「分鐘」取出（其中小時是24小時制）。請創立一個logical vector答案物件logicWithinTimeFrame，各個元素值為TRUE時代表allCommitDatesTW的時間落在凌晨4點30到凌晨6點30之間（含起迄時點）。（最後一行最忘了打答案物件）
 ```{r ans26}
-hour(allCommitDatesTW)>=4 & minute(allCommitDatesTW)>=30 
+hour(allCommitDatesTW)=4 & minute(allCommitDatesTW)>=30 ->hm1
+hour(allCommitDatesTW)=5 ->hm2
+hour(allCommitDatesTW)=6 & minute(allCommitDatesTW)<=30 ->hm3
+logicWithinTimeFrame <- hm1|hm2|hm3
+logicWithinTimeFrame
 ```
 
 ## 3
